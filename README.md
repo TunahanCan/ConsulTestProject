@@ -1,4 +1,4 @@
 # ConsulTestProject
 firs commit
 
-Project neeot to consul server
+Project need to consul server
