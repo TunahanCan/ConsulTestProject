@@ -5,6 +5,7 @@ import com.example.authservice.domain.payload.AuthRequest;
 import com.example.authservice.domain.payload.AuthResponse;
 import com.example.authservice.repository.UserRepository;
 import io.jsonwebtoken.Claims;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,15 +23,13 @@ import java.util.Set;
 
 
 @Component
+@AllArgsConstructor
 public class JwtUserDetailService implements UserDetailsService {
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private  JwtUtil jwtUtil;
 
-    @Autowired
     @Lazy
     private  AuthenticationManager authenticationManager;
 
@@ -70,7 +69,6 @@ public class JwtUserDetailService implements UserDetailsService {
         });
         return authorities;
     }
-
     private void authenticate(String userName, String userPassword) throws Exception{
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
@@ -80,5 +78,4 @@ public class JwtUserDetailService implements UserDetailsService {
             throw new Exception("Bad credentials from user");
         }
     }
-
 }

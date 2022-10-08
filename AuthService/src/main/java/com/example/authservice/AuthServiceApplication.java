@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class AuthServiceApplication {
-
     @Bean
     @LoadBalanced
     public RestTemplate restTemplate() {
@@ -20,5 +19,4 @@ public class AuthServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthServiceApplication.class, args);
     }
-
 }

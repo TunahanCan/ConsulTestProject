@@ -14,9 +14,6 @@ public class GatewayConfig {
 
     private AuthenticationFilter filter;
 
-    /**
-     * @param builder
-     * @return */
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -37,5 +34,4 @@ public class GatewayConfig {
                         .uri("lb://auth-service"))
                 .build();
     }
-
 }
