@@ -24,4 +24,5 @@ public class ApiGatewayApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("api gateway run "+ appMesage);
     }
+
 }
