@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 /**
  * @author  tunah
  */
+
 @Component
 public class RouterValidator {
 

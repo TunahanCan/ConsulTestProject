@@ -124,5 +124,4 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         log.warn("---Request Completed---");
     }
 
-
 }
