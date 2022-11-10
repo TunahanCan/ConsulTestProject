@@ -6,6 +6,13 @@ Project need to consul server
 
 In this project I'm demonstrating you how to use Hashicorp's Consul as a discovery and configuration server with Spring Cloud Consul and other Spring Cloud projects for building microservice-based architecture.
 
+
+$ docker run -d --name consul-test-1 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul
+
+$ docker run -d --name consul-agent-2 -e CONSUL_BIND_INTERFACE=eth0 -p 8501:8500 consul agent -dev -join=172.17.0.2
+$ docker run -d --name consul-agent-3 -e CONSUL_BIND_INTERFACE=eth0 -p 8502:8500 consul agent -dev -join=172.17.0.2
+
+
 example consul server config file
 
 config/student-service::dev/data
