@@ -6,6 +6,7 @@ import com.example.schoolservice.exception.ApiException;
 import com.example.schoolservice.model.SchoolModel;
 import com.example.schoolservice.repo.SchoolRepository;
 import com.example.schoolservice.security.RequiresRoles;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 

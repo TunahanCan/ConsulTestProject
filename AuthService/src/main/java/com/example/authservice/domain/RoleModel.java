@@ -2,9 +2,9 @@ package com.example.authservice.domain;
 
 
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 
 @Getter
 @Setter
@@ -23,5 +23,4 @@ public class RoleModel {
     private String roleName;
 
     private String roleDescription;
-
 }

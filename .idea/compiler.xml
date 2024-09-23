@@ -15,14 +15,6 @@
         <module name="SchoolService" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ApiGateway" target="17" />
-      <module name="AuthService" target="17" />
-      <module name="ConsulTestProject" target="17" />
-      <module name="SchoolService" target="17" />
-      <module name="StudentService" target="17" />
-      <module name="TestService" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

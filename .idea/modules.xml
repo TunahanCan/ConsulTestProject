@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ApiGateway/ApiGateway.iml" filepath="$PROJECT_DIR$/ApiGateway/ApiGateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AuthService/AuthService.iml" filepath="$PROJECT_DIR$/AuthService/AuthService.iml" />
       <module fileurl="file://$PROJECT_DIR$/ConsulTestProject.iml" filepath="$PROJECT_DIR$/ConsulTestProject.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SchoolService/SchoolService.iml" filepath="$PROJECT_DIR$/SchoolService/SchoolService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/StudentService/StudentService.iml" filepath="$PROJECT_DIR$/StudentService/StudentService.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TestService/TestService.iml" filepath="$PROJECT_DIR$/TestService/TestService.iml" />
     </modules>
   </component>
 </project>

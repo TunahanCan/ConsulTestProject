@@ -9,15 +9,14 @@
     <name>ApiGateway</name>
     <description>ApiGateway</description>
     <properties>
-        <java.version>17</java.version>
-        <repackage.classifier/>
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
+        <java.version>21</java.version>
+        <spring-cloud.version>2023.0.3</spring-cloud.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <version>3.3.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -38,14 +37,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Test -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -82,7 +73,6 @@
             <scope>runtime</scope>
         </dependency>
         <!-- jwt implementesyon -->
-
     </dependencies>
 
     <dependencyManagement>

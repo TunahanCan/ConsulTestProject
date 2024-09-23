@@ -3,11 +3,11 @@ package com.example.schoolservice.model;
 
 
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 
 @Data

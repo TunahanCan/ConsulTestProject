@@ -6,12 +6,12 @@ import com.example.authservice.domain.UserModel;
 import com.example.authservice.domain.payload.SignupRequest;
 import com.example.authservice.repository.RoleRepository;
 import com.example.authservice.repository.UserRepository;
-import com.example.authservice.service.UserService;
+import com.example.authservice.service.AuthenticationService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,10 +29,11 @@ public class RoleLoader {
     RoleRepository roleRepository;
 
     @Autowired
-    UserService userService;
+    UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
+    AuthenticationService authenticationService;
+
 
 
     @Value("${spring.profiles.active}")
@@ -95,11 +96,11 @@ public class RoleLoader {
             SignupRequest adminReq = new SignupRequest();
             adminReq.setEmail("admin@huawei.com");
             Set<String> role = new HashSet<>();
-            role.add("ROLE_ADMIN");
+            role.add("ADMIN");
             adminReq.setRole( role );
             adminReq.setUsername("ADMIN");
             adminReq.setPassword("12345678");
-            userService.createNewUser(adminReq) ;
+            authenticationService.register(adminReq);
         }
     }
 

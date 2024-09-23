@@ -16,13 +16,15 @@ public class ApiGatewayApplication implements CommandLineRunner {
     @Value("${application.message}")
     String appMesage ;
 
+    @Value("${spring.application.name}")
+    String appName;
+
     public static void main(String[] args) {
         SpringApplication.run(ApiGatewayApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        System.out.println("api gateway run "+ appMesage);
+    public void run(String... args)  {
+        System.out.println(appMesage + "-" + appName);
     }
-
 }

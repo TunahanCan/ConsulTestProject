@@ -8,6 +8,8 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +17,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
 
-/**
- * https://stackoverflow.com/questions/38360215/how-to-create-a-spring-interceptor-for-spring-restful-web-services
- */
 
 @Slf4j
 @Configuration
@@ -73,11 +70,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     }
 
     private  boolean roleControl(Claims claims , List<String> mustRoles  ){
-        List<String> tokenRoles = jwtUtil.getAutauthoritiesFromClaims(claims);
+        List<String> tokenRoles = jwtUtil.getAuthoritiesFromClaims(claims);
         if(tokenRoles.isEmpty()) return  true;
         else {
             if( mustRoles.isEmpty() ) return true;
-            if( !mustRoles.stream().anyMatch(tokenRoles::contains) )
+            if(mustRoles.stream().noneMatch(tokenRoles::contains))
                 throw new ApiException("Forbidden User" , HttpStatus.FORBIDDEN);
             else return true;
         }

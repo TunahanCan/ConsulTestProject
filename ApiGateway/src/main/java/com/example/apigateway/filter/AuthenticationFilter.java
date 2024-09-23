@@ -1,19 +1,17 @@
 package com.example.apigateway.filter;
-
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
 
 @RefreshScope
 @Component
@@ -21,48 +19,50 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class AuthenticationFilter implements GatewayFilter {
 
-    private RouterValidator routerValidator;
-
-    private JwtUtil jwtUtil;
+    private final RouterValidator routerValidator;
+    private final JwtUtil jwtUtil;
 
     private static final String AUTHORIZATION = "Authorization";
+    private static final String ID_HEADER = "id";
+    private static final String ROLE_HEADER = "role";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        if (routerValidator.isSecured.test(request)) {
-            if (this.isAuthMissing(request))
-                return this.onError(exchange, "Authorization header is missing in request", HttpStatus.UNAUTHORIZED);
 
-            final String token = this.getAuthHeader(request);
+        if (routerValidator.isSecured.test(request)) {
+            if (isAuthMissing(request)) {
+                return onError(exchange, "Authorization header is missing in request");
+            }
+
+            final String token = getAuthHeader(request);
             try {
                 jwtUtil.validateJwtToken(token);
-            }catch (Exception ex)
-            {
-                return this.onError(exchange, ex.getMessage() , HttpStatus.NOT_ACCEPTABLE);
+            } catch (Exception ex) {
+                return onError(exchange, ex.getMessage());
             }
-            if (jwtUtil.isInvalid(token))
-                return this.onError(exchange, "Authorization header is invalid", HttpStatus.UNAUTHORIZED);
-            this.populateRequestWithHeaders(exchange, token);
+
+            populateRequestWithHeaders(exchange, token);
         }
+
         return chain.filter(exchange);
     }
 
-
-    private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
+    private Mono<Void> onError(ServerWebExchange exchange, String err) {
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(httpStatus);
-        return response.setComplete();
+        response.setStatusCode(HttpStatus.UNAUTHORIZED);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        String errorResponse = convertToJson(err);
+        byte[] bytes = errorResponse.getBytes();
+        return response.writeWith(Mono.just(response.bufferFactory().wrap(bytes)));
     }
 
-    private Mono<Void> onErrorWithResponseEntity(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
-        ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(httpStatus);
-        return response.setComplete();
+    private String convertToJson(String err) {
+        return String.format("{\"error\": \"%s\"}", err);
     }
 
     private String getAuthHeader(ServerHttpRequest request) {
-        return request.getHeaders().getOrEmpty(AUTHORIZATION).get(0).replace("Bearer ", "");
+        return request.getHeaders().getOrEmpty(AUTHORIZATION).getFirst().replace("Bearer ", "");
     }
 
     private boolean isAuthMissing(ServerHttpRequest request) {
@@ -72,9 +72,8 @@ public class AuthenticationFilter implements GatewayFilter {
     private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
         Claims claims = jwtUtil.getAllClaimsFromToken(token);
         exchange.getRequest().mutate()
-                .header("id", String.valueOf(claims.get("id")))
-                .header("role", String.valueOf(claims.get("role")))
+                .header(ID_HEADER, String.valueOf(claims.get("id")))
+                .header(ROLE_HEADER, String.valueOf(claims.get("role")))
                 .build();
     }
-
 }

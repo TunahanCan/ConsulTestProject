@@ -1,18 +1,18 @@
 package com.example.authservice.commonhandler.exception;
 
 
-
-
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import java.util.Date;
 
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class ApiException extends RuntimeException {
 
     private String exceptionCode;
@@ -38,6 +38,4 @@ public class ApiException extends RuntimeException {
         super(message);
         setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }
