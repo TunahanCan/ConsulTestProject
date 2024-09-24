@@ -73,6 +73,14 @@
             <scope>runtime</scope>
         </dependency>
         <!-- jwt implementesyon -->
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
